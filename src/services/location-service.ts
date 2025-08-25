@@ -1,4 +1,4 @@
-import { ApiService } from "@/utils/api-service";
+import { ApiService } from "@/services/api-service";
 import { normalizeLocalities } from "@/utils/api-utils";
 
 export const searchLocations = async (query: string, token: string, apiService: ApiService) => {

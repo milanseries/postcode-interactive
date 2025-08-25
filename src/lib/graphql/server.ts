@@ -2,7 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { typeDefs } from "./typeDefs";
 import { createResolvers } from "./resolvers";
-import { ApiService } from "@/utils/api-service";
+import { ApiService } from "@/services/api-service";
 import { NextRequest } from "next/server";
 
 const apiService = new ApiService();
