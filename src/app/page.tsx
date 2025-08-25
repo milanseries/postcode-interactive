@@ -1,5 +1,10 @@
-import { Box } from "@mantine/core";
+import { Container } from "@mantine/core";
+import { PageView } from "./page-view";
 
 export default function Home() {
-  return <Box>This is the home page of the Postcode Interactive application.</Box>;
+  return (
+    <Container>
+      <PageView />
+    </Container>
+  );
 }
