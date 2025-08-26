@@ -1,7 +1,7 @@
-import { searchLocations, verifyLocation } from "@/services/location-service";
 import { Resolvers } from "@/types";
 import { ApiService } from "@/services/api-service";
-import { extractToken, handleApiError } from "@/utils/api-utils";
+import { extractToken, handleApiError } from "@/services/graphql-service";
+import { searchLocations, verifyLocation } from "@/utils/utils";
 
 export const createResolvers = (dependencies: { apiService: ApiService }): Resolvers => {
   const { apiService } = dependencies;
@@ -10,8 +10,9 @@ export const createResolvers = (dependencies: { apiService: ApiService }): Resol
       searchLocations: async (_, { input }, contextValue) => {
         try {
           const token = extractToken(contextValue.req.headers.get("authorization"));
-          const { localities, message } = await searchLocations(input.query, token, apiService);
-          return { message, data: localities };
+          const { localities } = await apiService.getData({ q: input.query }, token);
+          const { locations, message } = searchLocations(localities.locality, input.query);
+          return { message, data: locations };
         } catch (error) {
           return handleApiError(error);
         }
@@ -23,7 +24,8 @@ export const createResolvers = (dependencies: { apiService: ApiService }): Resol
         try {
           const token = extractToken(contextValue.req.headers.get("authorization"));
           const { postcode, suburb, state } = input;
-          const result = await verifyLocation(postcode, suburb, state, token, apiService);
+          const { localities } = await apiService.getData({ q: postcode, state }, token);
+          const result = await verifyLocation(input, localities?.locality);
           return {
             message: result.isValid ? "The postcode, suburb, and state input are valid." : null,
             data: result.data || { postcode, suburb, state },

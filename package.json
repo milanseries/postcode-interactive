@@ -10,6 +10,7 @@
     "generate": "graphql-codegen"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.1",
     "@apollo/server": "^5.0.0",
     "@as-integrations/next": "^4.0.0",
     "@elastic/elasticsearch": "^8.11.0",

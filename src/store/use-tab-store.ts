@@ -1,16 +1,15 @@
-import { sourceInputSchema } from "@/components/source-input";
-import { schema } from "@/components/verifier-form";
-import z from "zod";
+import { SourceInput } from "@/components/source-form/use-source-form";
+import { VerifierInput } from "@/components/verifier-form/use-verifier-form";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface TabStore {
   activeTab: string | null;
-  verifierData: z.infer<typeof schema>;
-  sourceData: z.infer<typeof sourceInputSchema>;
+  verifierData: VerifierInput;
+  sourceData: SourceInput;
   setActiveTab: (tab: string | null) => void;
-  updateVerifierData: (newData: Partial<z.infer<typeof schema>>) => void;
-  updateSourceData: (newData: Partial<z.infer<typeof sourceInputSchema>>) => void;
+  updateVerifierData: (newData: Partial<VerifierInput>) => void;
+  updateSourceData: (newData: Partial<SourceInput>) => void;
   clearStore: () => void;
 }
 
