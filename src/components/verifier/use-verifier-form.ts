@@ -1,4 +1,4 @@
-import { dynamicAction } from "@/actions/generic-action";
+import { formAction } from "@/actions/form-action";
 import { useTabStore } from "@/store/use-tab-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export const useVerifierForm = () => {
     updateVerifierData(data);
     try {
       setIsLoading(true);
-      const response = await dynamicAction("verifier", data);
+      const response = await formAction("verifier", data);
       const verifiedMessage = response?.verifyLocation?.message;
       if (verifiedMessage) {
         toast.success(response?.verifyLocation?.message);

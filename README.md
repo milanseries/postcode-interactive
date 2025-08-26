@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Postcode Interactive
+
+Postcode Interactive is a modern web application for searching, verifying, and visualizing location data using Elasticsearch and Google Maps.
+
+## Features
+
+- **Location Search:** Query and display location data using Elasticsearch.
+- **Verification:** Validate and verify location information.
+- **Interactive Map:** Visualize locations on Google Maps with markers.
+- **GraphQL API:** Flexible data access via Apollo Server and GraphQL.
+- **Responsive UI:** Built with Mantine and React for a seamless user experience.
+- **Dockerized Services:** Easy setup for Elasticsearch and Kibana using Docker Compose.
+
+## Tech Stack
+
+- **Frontend:** Next.js, React, Mantine UI, React Hook Form, Zustand
+- **Backend:** Apollo Server, GraphQL, Elasticsearch
+- **Mapping:** @vis.gl/react-google-maps
+- **Validation:** Zod
+- **Dev Tools:** ESLint, GraphQL Codegen, Docker Compose
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js >= 20
+- Docker & Docker Compose
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/milanseries/postcode-interactive.git
+   cd postcode-interactive
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables:**
+
+   Create a `.env.local` file:
+
+   ```env
+   NEXT_API_ENDPOINT=
+   NEXT_ELASTIC_SEARCH_CLIENT_NODE=
+   NEXT_GRAPHQL_API_KEY=
+   NEXT_MAP_API_KEY=
+   NEXT_GRAPHQL_URL=
+   NEXT_ELASTIC_API_KEY=
+   ```
+
+4. **Start Elasticsearch & Kibana:**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+5. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Access the app:**
+
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Kibana: [http://localhost:5601](http://localhost:5601)
+   - Elasticsearch: [http://localhost:9200](http://localhost:9200)
+
+## Project Structure
+
+```text
+src/
+  actions/           # Form actions
+  app/               # Next.js app directory
+  components/        # UI components (map, source, verifier)
+  lib/
+    elasticsearch/   # Elasticsearch client, configs, plugin
+    graphql/         # GraphQL schema, resolvers, server
+  services/          # API and GraphQL service logic
+  store/             # Zustand store
+  utils/             # Utility functions and providers
+public/              # Static assets
+docker-compose.yml   # Elasticsearch & Kibana setup
+package.json         # Project metadata and scripts
+README.md            # Project documentation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev` — Start development server
+- `npm run build` — Build for production
+- `npm run start` — Start production server
+- `npm run lint` — Run ESLint
+- `npm run generate` — Generate GraphQL types
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API & Data
 
-## Learn More
+- **GraphQL Endpoint:** `/api/graphql/route.ts`
+- **Elasticsearch Index:** Configured in `src/lib/elasticsearch/elastic-index-configs.ts`
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the MIT License.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Author
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Maintained by [milanseries](https://github.com/milanseries).

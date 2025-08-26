@@ -50,6 +50,7 @@ export const verifyLocation = async (
   return {
     isValid: true,
     error: null,
+    matchingLocation,
     data: {
       postcode: matchingLocation.postcode,
       suburb: matchingLocation.location,
