@@ -13,6 +13,9 @@ export const QUERY_SEARCH_LOCATIONS = gql`
         state
       }
       message
+      error {
+        message
+      }
     }
   }
 `;
