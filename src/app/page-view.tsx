@@ -1,7 +1,7 @@
 "use client";
 
-import { SourceForm } from "@/components/source-form/source-form";
-import { VerifierForm } from "@/components/verifier-form/verifier-form";
+import { SourceForm } from "@/components/source/source-form";
+import { VerifierForm } from "@/components/verifier/verifier-form";
 import { useTabStore } from "@/store/use-tab-store";
 import { Tabs, TabsList, TabsTab, Box, TabsPanel } from "@mantine/core";
 import { useLayoutEffect, useState } from "react";

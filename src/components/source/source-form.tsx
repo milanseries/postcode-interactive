@@ -1,9 +1,10 @@
 "use client";
 
 import { Controller } from "react-hook-form";
-import { TextInput, Button, Box, Flex, Card, Grid, Typography } from "@mantine/core";
+import { TextInput, Button, Box, Flex, Grid } from "@mantine/core";
 import { MapContainer } from "../map/map-container";
 import { useSourceForm } from "./use-source-form";
+import { SourceResult } from "./source-result";
 
 export const SourceForm = () => {
   const { form, handleSubmit, isLoading, selectedId, results, handleClick } = useSourceForm();
@@ -28,34 +29,27 @@ export const SourceForm = () => {
         <Button mt="8" variant="filled" type="submit" loading={isLoading} fullWidth>
           Search
         </Button>
-        <Box mt="md">
-          <MapContainer lat={selectedId?.latitude} loc={selectedId?.longitude} />
-        </Box>
       </form>
-      <Box mt="md">
-        <Grid>
-          {results?.searchLocations?.data?.map((loc) => (
-            <Grid.Col key={loc?.id} span={{ base: 12, sm: 6, lg: 4 }}>
-              <Card
-                padding="lg"
-                radius="md"
-                withBorder
-                onClick={() => handleClick(loc)}
+      {results?.searchLocations.data?.length ? (
+        <Box mt="md">
+          <Grid>
+            <Grid.Col span={{ base: 12, sm: 6, lg: 6 }}>
+              <Box
                 style={{
-                  cursor: "pointer",
-                  borderColor: selectedId === loc ? "var(--mantine-color-blue-6)" : undefined,
+                  height: "400px",
+                  overflowY: "auto",
+                  paddingRight: "var(--mantine-spacing-xs)",
                 }}
               >
-                <Typography fw={500}>{loc?.location}</Typography>
-                <Typography c="dimmed">
-                  {loc?.state}, {loc?.postcode}
-                </Typography>
-                <Typography c="dimmed">{loc?.category}</Typography>
-              </Card>
+                <SourceResult results={results} handleClick={handleClick} selectedId={selectedId} />
+              </Box>
             </Grid.Col>
-          ))}
-        </Grid>
-      </Box>
+            <Grid.Col span={{ base: 12, sm: 6, lg: 6 }}>
+              <MapContainer lat={selectedId?.latitude} loc={selectedId?.longitude} />
+            </Grid.Col>
+          </Grid>
+        </Box>
+      ) : null}
     </Box>
   );
 };

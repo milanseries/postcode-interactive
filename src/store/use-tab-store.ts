@@ -1,15 +1,18 @@
-import { SourceInput } from "@/components/source-form/use-source-form";
-import { VerifierInput } from "@/components/verifier-form/use-verifier-form";
+import { SourceInput } from "@/components/source/use-source-form";
+import { VerifierInput } from "@/components/verifier/use-verifier-form";
+import { SearchLocationsQuery } from "@/types";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface TabStore {
   activeTab: string | null;
   verifierData: VerifierInput;
-  sourceData: SourceInput;
+  sourceInput: SourceInput;
+  sourcesData: SearchLocationsQuery;
   setActiveTab: (tab: string | null) => void;
   updateVerifierData: (newData: Partial<VerifierInput>) => void;
-  updateSourceData: (newData: Partial<SourceInput>) => void;
+  updateSourceInput: (newData: Partial<SourceInput>) => void;
+  updateSourceData: (newData: Partial<SearchLocationsQuery>) => void;
   clearStore: () => void;
 }
 
@@ -18,17 +21,28 @@ export const useTabStore = create<TabStore>()(
     (set) => ({
       activeTab: "verifier",
       verifierData: { postcode: "", state: "", suburb: "" },
-      sourceData: { query: "" },
+      sourceInput: { query: "" },
+      sourcesData: {
+        searchLocations: {
+          __typename: undefined,
+          message: undefined,
+          data: undefined,
+          error: undefined,
+        },
+      },
       setActiveTab: (tab) => set({ activeTab: tab }),
       updateVerifierData: (newData) =>
         set((state) => ({ verifierData: { ...state.verifierData, ...newData } })),
+      updateSourceInput: (newData) =>
+        set((state) => ({ sourceInput: { ...state.sourceInput, ...newData } })),
       updateSourceData: (newData) =>
-        set((state) => ({ sourceData: { ...state.sourceData, ...newData } })),
+        set((state) => ({ sourcesData: { ...state.sourcesData, ...newData } })),
       clearStore: () =>
         set({
           activeTab: "verifier",
           verifierData: { postcode: "", state: "", suburb: "" },
-          sourceData: { query: "" },
+          sourceInput: { query: "" },
+          sourcesData: undefined,
         }),
     }),
     {
