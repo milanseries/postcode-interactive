@@ -7,7 +7,7 @@ export const typeDefs = gql`
     state: String!
   }
 
-  type VerifyLocationError {
+  type LocationError {
     message: String
   }
 
@@ -20,7 +20,7 @@ export const typeDefs = gql`
   type VerifyLocationPayload {
     message: String
     data: VerifiedLocation
-    error: VerifyLocationError
+    error: LocationError
   }
 
   type SearchLocationResult {
@@ -36,6 +36,7 @@ export const typeDefs = gql`
   type SearchLocationsPayload {
     message: String
     data: [SearchLocationResult]
+    error: LocationError
   }
 
   input SearchLocationInput {

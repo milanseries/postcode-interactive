@@ -7,7 +7,12 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
   return (
     <MantineProvider>
       {children}
-      <ToastContainer hideProgressBar newestOnTop position="top-right" />
+      <ToastContainer
+        hideProgressBar
+        newestOnTop
+        position="top-right"
+        style={{ fontSize: "14px" }}
+      />
     </MantineProvider>
   );
 };

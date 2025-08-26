@@ -1,27 +1,31 @@
-import { ApiService } from "@/services/api-service";
-import { normalizeLocalities } from "@/utils/api-utils";
+import { SearchLocationResult, VerifyLocationInput } from "@/types";
 
-export const searchLocations = async (query: string, token: string, apiService: ApiService) => {
-  const results = await apiService.getData({ q: query }, token);
-  const localities = normalizeLocalities(results?.localities?.locality);
+export const normalizeLocalities = (
+  localities: SearchLocationResult | SearchLocationResult[]
+): SearchLocationResult[] => {
+  if (!localities) return [];
+  return Array.isArray(localities) ? localities : [localities];
+};
 
+export const searchLocations = (
+  results: SearchLocationResult | SearchLocationResult[],
+  query: string
+) => {
+  const locations = normalizeLocalities(results);
   return {
-    localities,
-    message: localities.length
-      ? `Found ${localities.length} suburbs for ${query}`
+    locations,
+    message: locations.length
+      ? `Found ${locations.length} suburbs for ${query}`
       : `No suburbs found for ${query}`,
   };
 };
 
 export const verifyLocation = async (
-  postcode: string,
-  suburb: string,
-  state: string,
-  token: string,
-  apiService: ApiService
+  input: VerifyLocationInput,
+  results: SearchLocationResult[]
 ) => {
-  const results = await apiService.getData({ q: postcode, state }, token);
-  const localities = normalizeLocalities(results?.localities?.locality);
+  const { postcode, suburb, state } = input;
+  const localities = normalizeLocalities(results);
 
   const matchingLocation = localities.find(
     (item) => item?.location?.toLowerCase() === suburb.toLowerCase()

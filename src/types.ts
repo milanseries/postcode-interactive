@@ -16,6 +16,11 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type LocationError = {
+  __typename?: 'LocationError';
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   verifyLocation: VerifyLocationPayload;
@@ -54,6 +59,7 @@ export type SearchLocationResult = {
 export type SearchLocationsPayload = {
   __typename?: 'SearchLocationsPayload';
   data?: Maybe<Array<Maybe<SearchLocationResult>>>;
+  error?: Maybe<LocationError>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -62,11 +68,6 @@ export type VerifiedLocation = {
   postcode?: Maybe<Scalars['String']['output']>;
   state?: Maybe<Scalars['String']['output']>;
   suburb?: Maybe<Scalars['String']['output']>;
-};
-
-export type VerifyLocationError = {
-  __typename?: 'VerifyLocationError';
-  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type VerifyLocationInput = {
@@ -78,7 +79,7 @@ export type VerifyLocationInput = {
 export type VerifyLocationPayload = {
   __typename?: 'VerifyLocationPayload';
   data?: Maybe<VerifiedLocation>;
-  error?: Maybe<VerifyLocationError>;
+  error?: Maybe<LocationError>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -156,6 +157,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  LocationError: ResolverTypeWrapper<LocationError>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   SearchLocationInput: SearchLocationInput;
@@ -163,7 +165,6 @@ export type ResolversTypes = {
   SearchLocationsPayload: ResolverTypeWrapper<SearchLocationsPayload>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   VerifiedLocation: ResolverTypeWrapper<VerifiedLocation>;
-  VerifyLocationError: ResolverTypeWrapper<VerifyLocationError>;
   VerifyLocationInput: VerifyLocationInput;
   VerifyLocationPayload: ResolverTypeWrapper<VerifyLocationPayload>;
 };
@@ -173,6 +174,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Float: Scalars['Float']['output'];
   Int: Scalars['Int']['output'];
+  LocationError: LocationError;
   Mutation: {};
   Query: {};
   SearchLocationInput: SearchLocationInput;
@@ -180,9 +182,13 @@ export type ResolversParentTypes = {
   SearchLocationsPayload: SearchLocationsPayload;
   String: Scalars['String']['output'];
   VerifiedLocation: VerifiedLocation;
-  VerifyLocationError: VerifyLocationError;
   VerifyLocationInput: VerifyLocationInput;
   VerifyLocationPayload: VerifyLocationPayload;
+};
+
+export type LocationErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['LocationError'] = ResolversParentTypes['LocationError']> = {
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -206,6 +212,7 @@ export type SearchLocationResultResolvers<ContextType = any, ParentType extends 
 
 export type SearchLocationsPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['SearchLocationsPayload'] = ResolversParentTypes['SearchLocationsPayload']> = {
   data?: Resolver<Maybe<Array<Maybe<ResolversTypes['SearchLocationResult']>>>, ParentType, ContextType>;
+  error?: Resolver<Maybe<ResolversTypes['LocationError']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -217,25 +224,20 @@ export type VerifiedLocationResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type VerifyLocationErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['VerifyLocationError'] = ResolversParentTypes['VerifyLocationError']> = {
-  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type VerifyLocationPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['VerifyLocationPayload'] = ResolversParentTypes['VerifyLocationPayload']> = {
   data?: Resolver<Maybe<ResolversTypes['VerifiedLocation']>, ParentType, ContextType>;
-  error?: Resolver<Maybe<ResolversTypes['VerifyLocationError']>, ParentType, ContextType>;
+  error?: Resolver<Maybe<ResolversTypes['LocationError']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
+  LocationError?: LocationErrorResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   SearchLocationResult?: SearchLocationResultResolvers<ContextType>;
   SearchLocationsPayload?: SearchLocationsPayloadResolvers<ContextType>;
   VerifiedLocation?: VerifiedLocationResolvers<ContextType>;
-  VerifyLocationError?: VerifyLocationErrorResolvers<ContextType>;
   VerifyLocationPayload?: VerifyLocationPayloadResolvers<ContextType>;
 };
 
@@ -245,11 +247,11 @@ export type VerifyLocationMutationVariables = Exact<{
 }>;
 
 
-export type VerifyLocationMutation = { __typename?: 'Mutation', verifyLocation: { __typename?: 'VerifyLocationPayload', message?: string | null, data?: { __typename?: 'VerifiedLocation', postcode?: string | null, suburb?: string | null, state?: string | null } | null, error?: { __typename?: 'VerifyLocationError', message?: string | null } | null } };
+export type VerifyLocationMutation = { __typename?: 'Mutation', verifyLocation: { __typename?: 'VerifyLocationPayload', message?: string | null, data?: { __typename?: 'VerifiedLocation', postcode?: string | null, suburb?: string | null, state?: string | null } | null, error?: { __typename?: 'LocationError', message?: string | null } | null } };
 
 export type SearchLocationsQueryVariables = Exact<{
   input: SearchLocationInput;
 }>;
 
 
-export type SearchLocationsQuery = { __typename?: 'Query', searchLocations: { __typename?: 'SearchLocationsPayload', message?: string | null, data?: Array<{ __typename?: 'SearchLocationResult', category?: string | null, id?: number | null, latitude?: number | null, location?: string | null, longitude?: number | null, postcode?: string | null, state?: string | null } | null> | null } };
+export type SearchLocationsQuery = { __typename?: 'Query', searchLocations: { __typename?: 'SearchLocationsPayload', message?: string | null, data?: Array<{ __typename?: 'SearchLocationResult', category?: string | null, id?: number | null, latitude?: number | null, location?: string | null, longitude?: number | null, postcode?: string | null, state?: string | null } | null> | null, error?: { __typename?: 'LocationError', message?: string | null } | null } };

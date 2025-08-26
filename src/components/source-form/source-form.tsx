@@ -1,48 +1,12 @@
 "use client";
 
-import z from "zod";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller } from "react-hook-form";
 import { TextInput, Button, Box, Flex, Card, Grid, Typography } from "@mantine/core";
-import { useTabStore } from "@/store/use-tab-store";
-import { sourceAction } from "@/actions/source-action";
-import { useState } from "react";
-import { SearchLocationResult, SearchLocationsQuery } from "@/types";
-import { MapContainer } from "./map-container";
-import { toast } from "react-toastify";
+import { MapContainer } from "../map/map-container";
+import { useSourceForm } from "./use-source-form";
 
-export const sourceInputSchema = z.object({
-  query: z.string().min(1, "Query is required"),
-});
-
-export const SourceInput = () => {
-  const { updateSourceData } = useTabStore();
-  const [selectedId, setSelectedId] = useState<SearchLocationResult | null>(null);
-
-  const getCurrentState = useTabStore.getState;
-  const [results, setResults] = useState<SearchLocationsQuery>();
-  const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<z.infer<typeof sourceInputSchema>>({
-    defaultValues: { query: getCurrentState().sourceData.query },
-    resolver: zodResolver(sourceInputSchema),
-  });
-
-  async function handleSubmit(data: z.infer<typeof sourceInputSchema>) {
-    updateSourceData(data);
-    try {
-      setIsLoading(true);
-      const response = await sourceAction(data);
-      setResults(response);
-    } catch {
-      toast.error("check your api");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  const handleClick = (location: SearchLocationResult | null) => {
-    setSelectedId(location);
-  };
+export const SourceForm = () => {
+  const { form, handleSubmit, isLoading, selectedId, results, handleClick } = useSourceForm();
 
   return (
     <Box>

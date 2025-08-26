@@ -1,7 +1,7 @@
 "use client";
 
-import { SourceInput } from "@/components/source-input";
-import { VerifierForm } from "@/components/verifier-form";
+import { SourceForm } from "@/components/source-form/source-form";
+import { VerifierForm } from "@/components/verifier-form/verifier-form";
 import { useTabStore } from "@/store/use-tab-store";
 import { Tabs, TabsList, TabsTab, Box, TabsPanel } from "@mantine/core";
 import { useLayoutEffect, useState } from "react";
@@ -27,7 +27,7 @@ export const PageView = () => {
           <VerifierForm />
         </TabsPanel>
         <TabsPanel value="source">
-          <SourceInput />
+          <SourceForm />
         </TabsPanel>
       </Box>
     </Tabs>
