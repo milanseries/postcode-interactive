@@ -19,14 +19,10 @@ export async function indexExists(indexName: string): Promise<boolean> {
 
 export async function createIndex(config: any): Promise<void> {
   try {
-    const { index, mappings, settings } = config;
+    const { index, mappings } = config;
     await elasticClient.indices.create({
       index,
       mappings,
-      settings: settings || {
-        number_of_shards: 1,
-        number_of_replicas: 0,
-      },
     });
   } catch (error) {
     console.error(`Error creating index ${config.index}:`, error);
