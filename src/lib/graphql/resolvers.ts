@@ -16,12 +16,17 @@ export const createResolvers = (dependencies: { apiService: ApiService }): Resol
           const body = localities?.locality?.flatMap((loc) => [
             { index: { _index: SEARCH_LOCATIONS_INDEX } },
             {
-              metadata: {
-                searchType: input.query,
+              searchQuery: input.query,
+              timestamp: new Date().toISOString(),
+              category: loc?.category,
+              locationId: loc?.id,
+              location: loc?.location,
+              postcode: loc?.postcode,
+              state: loc?.state,
+              coordinates: {
+                lat: loc?.latitude || 0,
+                lon: loc?.longitude || 0,
               },
-              name: loc.location,
-              type: loc.category,
-              coordinates: { lat: loc.latitude || 0, lon: loc.longitude || 0 },
             },
           ]);
           try {
@@ -47,13 +52,16 @@ export const createResolvers = (dependencies: { apiService: ApiService }): Resol
           const result = await verifyLocation(input, localities?.locality);
           try {
             await elasticClient.index({
+              refresh: true,
               index: SEARCH_LOCATIONS_INDEX,
               body: {
-                metadata: {
-                  searchQuery: input?.suburb,
-                },
-                name: result?.matchingLocation?.location,
-                type: result?.matchingLocation?.category,
+                query: input?.suburb,
+                timestamp: new Date().toISOString(),
+                category: result?.matchingLocation?.category,
+                locationId: result?.matchingLocation?.id,
+                location: result?.matchingLocation?.location,
+                postcode: result?.matchingLocation?.postcode,
+                state: result?.matchingLocation?.state,
                 coordinates: {
                   lat: result?.matchingLocation?.latitude || 0,
                   lon: result?.matchingLocation?.longitude || 0,

@@ -11,27 +11,20 @@ export const mapping = {
       },
     },
     timestamp: { type: "date" },
-    metadata: {
-      type: "object",
-      properties: {
-        resultCount: { type: "integer" },
-        searchType: { type: "keyword" },
-        apiVersion: { type: "keyword" },
-      },
-    },
-    id: { type: "keyword" },
-    name: {
+    category: { type: "keyword" },
+    locationId: { type: "integer" },
+    location: {
       type: "text",
       fields: {
-        keyword: { type: "keyword" },
+        keyword: {
+          type: "keyword",
+          ignore_above: 256,
+        },
       },
     },
-    type: { type: "keyword" },
+    postcode: { type: "keyword" },
+    state: { type: "keyword" },
     coordinates: { type: "geo_point" },
-    score: { type: "float" },
-    address: { type: "text" },
-    city: { type: "keyword" },
-    country: { type: "keyword" },
   },
 };
 
